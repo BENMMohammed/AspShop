@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Product>
+
+@{
+        ViewData["Title"] = "Products";
+}
+
+<h1>Produits</h1>
+
+<div class="row">
+        @foreach (var item in Model)
+        {
+                <div class="col-4">
+                        <img class="rounded" style="width:100%; height:auto" src="/media/products/@item.Image" alt="" />
+                        <h4>@item.Name</h4>
+                        <div>
+                                @Html.Raw(item.Description)
+                        </div>
+                        <p>
+                                @item.Price.ToString("C2")
+                        </p>
+                        <p>
+                                <a class="btn btn-secondary" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id">Ajouter panier</a>
+                        </p>
+                </div>
+        }
+
+
+        @if (ViewBag.TotalPages > 1)
+        {
+                <div class="d-flex w-100 justify-content-center">
+                        <pagination page-count="@ViewBag.TotalPages"
+                            page-target="/products/@ViewBag.CategorySlug"
+                            page-number="@ViewBag.PageNumber"
+                            page-range="@ViewBag.PageRange">
+                        </pagination>
+                </div>
+        }
+
+</div>
